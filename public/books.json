@@ -1,0 +1,80 @@
+[
+    {
+        "bookId": 1,
+        "bookName": "The Silent Patient",
+        "author": "Alex Michaelides",
+        "image": "https://i.ibb.co/j56sBmd/book-1.png",
+        "review": "A gripping psychological thriller with unexpected twists.",
+        "totalPages": 336,
+        "rating": 4.3,
+        "category": "Fiction",
+        "tags": ["Suspense", "Psychological"],
+        "publisher": "Celadon Books",
+        "yearOfPublishing": 2019
+    },
+    {
+        "bookId": 2,
+        "bookName": "Educated: A Memoir",
+        "author": "Tara Westover",
+        "image": "https://i.ibb.co/yqVJcTF/book-2.jpg",
+        "review": "A powerful memoir of a woman's journey to self-education and healing.",
+        "totalPages": 352,
+        "rating": 4.5,
+        "category": "Memoir",
+        "tags": ["Biography", "Education"],
+        "publisher": "Random House",
+        "yearOfPublishing": 2018
+    },
+    {
+        "bookId": 3,
+        "bookName": "Where the Crawdads Sing",
+        "author": "Delia Owens",
+        "image": "https://i.ibb.co/XsjbFxd/book-3.jpg",
+        "review": "A beautifully written novel that explores nature, loneliness, and resilience.",
+        "totalPages": 384,
+        "rating": 4.7,
+        "category": "Fiction",
+        "tags": ["Nature", "Coming-of-age"],
+        "publisher": "G.P. Putnam's Sons",
+        "yearOfPublishing": 2018
+    },
+    {
+        "bookId": 4,
+        "bookName": "Becoming",
+        "author": "Michelle Obama",
+        "image": "https://i.ibb.co/gFTJZTb/book-4.jpg",
+        "review": "An inspiring memoir of the former First Lady's journey from the South Side of Chicago to the White House.",
+        "totalPages": 448,
+        "rating": 4.8,
+        "category": "Memoir",
+        "tags": ["Biography", "Politics"],
+        "publisher": "Crown Publishing Group",
+        "yearOfPublishing": 2018
+    },
+    {
+        "bookId": 5,
+        "bookName": "The Night Circus",
+        "author": "Erin Morgenstern",
+        "image": "https://i.ibb.co/h21VRbh/book-5.jpg",
+        "review": "A magical tale of love and rivalry set in a mysterious circus.",
+        "totalPages": 400,
+        "rating": 4.4,
+        "category": "Fantasy",
+        "tags": ["Magic", "Romance"],
+        "publisher": "Doubleday",
+        "yearOfPublishing": 2011
+    },
+    {
+        "bookId": 6,
+        "bookName": "Sapiens: A Brief History of Humankind",
+        "author": "Yuval Noah Harari",
+        "image": "https://i.ibb.co/jL9kWgy/book-6.jpg",
+        "review": "An engaging exploration of human history and evolution.",
+        "totalPages": 464,
+        "rating": 4.6,
+        "category": "History",
+        "tags": ["Anthropology", "Evolution"],
+        "publisher": "Harper",
+        "yearOfPublishing": 2014
+    }
+]
