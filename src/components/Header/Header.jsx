@@ -21,7 +21,7 @@ const Header = () => {
     </>
 
     return (
-        <div className="navbar bg-base-100">
+        <div className="navbar bg-base-100 mt-6 mb-12">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn-ghost lg:hidden">
@@ -47,7 +47,7 @@ const Header = () => {
                 <a className="btn-ghost text-[28px] font-bold ps-2 md:ps-0">Book Vibe</a>
             </div>
             <div className="navbar-center hidden lg:flex">
-                <ul className="menu menu-horizontal px-1">
+                <ul className="menu menu-horizontal px-1 gap-4">
                     {links}
                 </ul>
             </div>

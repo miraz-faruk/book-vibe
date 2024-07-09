@@ -7,8 +7,8 @@ import {
 import './index.css'
 import Root from './components/Root/Root';
 import Home from './components/Home/Home';
-import Books from './components/Books/Books';
 import ErrorPage from './components/ErrorPage/ErrorPage';
+import ListedBooks from './components/ListedBooks/ListedBooks';
 
 const router = createBrowserRouter([
   {
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/listed-books",
-        element: <Books></Books>
+        element: <ListedBooks></ListedBooks>
       }
     ],
   },
