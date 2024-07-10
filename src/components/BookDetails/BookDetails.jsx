@@ -1,7 +1,8 @@
 import { useLoaderData, useParams } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { saveBookToReadList } from "../../utility/localstorage";
+import { saveBookToReadList, getStoredBookToReadList } from "../../utility/localstorage";
+import { useEffect, useState } from "react";
 
 const BookDetails = () => {
     const books = useLoaderData();
@@ -10,10 +11,22 @@ const BookDetails = () => {
     const book = books.find(book => book.bookId === idInt)
     console.log(book);
 
+    const [readBooks, setReadBooks] = useState([]);
+
+    useEffect(() => {
+        const storedBookIds = getStoredBookToReadList();
+        setReadBooks(storedBookIds);
+    })
+
     const handleReadButton = () => {
-        saveBookToReadList(idInt);
-        toast('Books Added to Read List');
-    }
+        if (readBooks.includes(idInt)) {
+            toast.warning("This book is already added to the read list.");
+        } else {
+            saveBookToReadList(idInt);
+            toast.success("Book added to read list successfully.");
+            setReadBooks([...readBooks, idInt]);
+        }
+    };
 
     return (
         <div className="flex flex-col md:flex-row min-h-screen min-w-screen gap-12">
