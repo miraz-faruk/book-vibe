@@ -1,6 +1,7 @@
 import { IoLocationOutline } from "react-icons/io5";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { CiMemoPad } from "react-icons/ci";
+import { Link } from "react-router-dom";
 
 
 const ReadBook = ({ book }) => {
@@ -36,11 +37,10 @@ const ReadBook = ({ book }) => {
                     <div className="flex items-center gap-3">
                         <a className="bg-[#328EFF26] text-[#328EFF] px-5 py-3 rounded-full">Category: {category}</a>
                         <a className="bg-[#FFAC3326] px-5 py-3 rounded-full text-[#FFAC33]">Rating: {rating}</a>
-                        <button className="bg-[#23BE0A] text-white px-5 py-2.5 rounded-full text-lg font-medium">View Details</button>
+                        <Link to={`/book/${bookId}`}><button className="bg-[#23BE0A] text-white px-5 py-2.5 rounded-full text-lg font-medium">View Details</button></Link>
                     </div>
                 </div>
             </div>
-            {/* <h2>Hello read book {bookId}</h2> */}
         </div>
     );
 };
