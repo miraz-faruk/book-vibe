@@ -84,21 +84,11 @@ const ListedBooks = () => {
                     )}
                 </div>
             </div>
-            <div className="flex justify-center mb-4">
-                <button
-                    className={`tab-btn ${activeTab === 'read' ? 'active' : ''}`}
-                    onClick={() => handleTabChange('read')}
-                >
-                    Read Books
-                </button>
-                <button
-                    className={`tab-btn ${activeTab === 'wishlist' ? 'active' : ''}`}
-                    onClick={() => handleTabChange('wishlist')}
-                >
-                    Wishlist
-                </button>
+            <div className="tabs tabs-lifted">
+                <input type="radio" name="my_tabs_2" id="tab-read" role="tab" className={`tab visually-hidden text-lg ${activeTab === 'read' ? 'text-black' : 'text-[#13131380]'}`} aria-label="Read Books" checked={activeTab === 'read'} onChange={() => handleTabChange('read')} />
+                <input type="radio" name="my_tabs_2" id="tab-wishlist" role="tab" className={`tab visually-hidden text-lg ${activeTab === 'read' ? 'text-[#13131380]' : 'text-black'}`} aria-label="Wishlist Books" checked={activeTab === 'wishlist'} onChange={() => handleTabChange('wishlist')} />
             </div>
-            <div className="books-container">
+            <div className="books-container mt-5">
                 {
                     displayBooks.map(book => (
                         activeTab === 'read' ? (
