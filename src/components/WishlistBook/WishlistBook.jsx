@@ -2,6 +2,7 @@ import { IoLocationOutline } from "react-icons/io5";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { CiMemoPad } from "react-icons/ci";
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 const WishlistBook = ({ book }) => {
     const { bookId, image, bookName, author, tags, yearOfPublishing, totalPages, category, rating, publisher } = book;
@@ -42,6 +43,21 @@ const WishlistBook = ({ book }) => {
             </div>
         </div>
     );
+};
+
+WishlistBook.propTypes = {
+    book: PropTypes.shape({
+        bookId: PropTypes.string.isRequired,
+        image: PropTypes.string.isRequired,
+        bookName: PropTypes.string.isRequired,
+        author: PropTypes.string.isRequired,
+        tags: PropTypes.arrayOf(PropTypes.string),
+        yearOfPublishing: PropTypes.number.isRequired,
+        totalPages: PropTypes.number.isRequired,
+        category: PropTypes.string.isRequired,
+        rating: PropTypes.number.isRequired,
+        publisher: PropTypes.string.isRequired,
+    }).isRequired,
 };
 
 export default WishlistBook;

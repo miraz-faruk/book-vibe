@@ -1,6 +1,6 @@
 import { FaRegStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
-
+import PropTypes from 'prop-types';
 
 const Book = ({ book }) => {
 
@@ -35,6 +35,18 @@ const Book = ({ book }) => {
             </Link>
         </div>
     );
+};
+
+Book.propTypes = {
+    book: PropTypes.shape({
+        bookId: PropTypes.string.isRequired,
+        image: PropTypes.string.isRequired,
+        bookName: PropTypes.string.isRequired,
+        author: PropTypes.string.isRequired,
+        tags: PropTypes.arrayOf(PropTypes.string),
+        category: PropTypes.string.isRequired,
+        rating: PropTypes.number.isRequired
+    }).isRequired,
 };
 
 export default Book;
