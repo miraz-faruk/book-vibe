@@ -1,22 +1,28 @@
 import { useLoaderData, useParams } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { saveBookToReadList, getStoredBookToReadList } from "../../utility/localstorage";
+import { saveBookToReadList, getStoredBookToReadList, getStoredWishlist, saveBookToWishlist } from "../../utility/localstorage";
 import { useEffect, useState } from "react";
 
 const BookDetails = () => {
     const books = useLoaderData();
     const { id } = useParams();
     const idInt = parseInt(id);
-    const book = books.find(book => book.bookId === idInt)
+    const book = books.find(book => book.bookId === idInt);
     console.log(book);
 
     const [readBooks, setReadBooks] = useState([]);
+    const [wishlistBooks, setWishlistBooks] = useState([]);
 
     useEffect(() => {
         const storedBookIds = getStoredBookToReadList();
         setReadBooks(storedBookIds);
-    })
+    }, []);
+
+    useEffect(() => {
+        const storedWishlistBooks = getStoredWishlist();
+        setWishlistBooks(storedWishlistBooks);
+    }, []);
 
     const handleReadButton = () => {
         if (readBooks.includes(idInt)) {
@@ -25,6 +31,23 @@ const BookDetails = () => {
             saveBookToReadList(idInt);
             toast.success("Book added to read list successfully.");
             setReadBooks([...readBooks, idInt]);
+            if (wishlistBooks.includes(idInt)) {
+                const updatedWishlist = wishlistBooks.filter(bookId => bookId !== idInt);
+                setWishlistBooks(updatedWishlist);
+                localStorage.setItem('book-wishlist', JSON.stringify(updatedWishlist));
+            }
+        }
+    };
+
+    const handleWishlistButton = () => {
+        if (readBooks.includes(idInt)) {
+            toast.warning("This book is already added to the read list and cannot be added to the wishlist.");
+        } else if (wishlistBooks.includes(idInt)) {
+            toast.warning("This book is already added to the wishlist.");
+        } else {
+            saveBookToWishlist(idInt);
+            toast.success("Book added to wishlist successfully.");
+            setWishlistBooks([...wishlistBooks, idInt]);
         }
     };
 
@@ -62,7 +85,7 @@ const BookDetails = () => {
                 </div>
                 <div className="flex gap-4">
                     <button onClick={handleReadButton} className="btn text-lg font-semibold px-7 border border-[#1313134D] rounded-lg">Read</button>
-                    <button className="btn bg-[#50B1C9] text-white px-7 text-lg font-semibold border border-[#50B1C9]">Wishlist</button>
+                    <button onClick={handleWishlistButton} className="btn bg-[#50B1C9] text-white px-7 text-lg font-semibold border border-[#50B1C9]">Wishlist</button>
                 </div>
             </div>
             <ToastContainer />

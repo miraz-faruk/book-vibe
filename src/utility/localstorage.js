@@ -15,4 +15,21 @@ const saveBookToReadList = id => {
     }
 }
 
-export { getStoredBookToReadList, saveBookToReadList }
+const getStoredWishlist = () => {
+    const storedWishlist = localStorage.getItem('wishlist');
+    if (storedWishlist) {
+        return JSON.parse(storedWishlist);
+    }
+    return [];
+}
+
+const saveBookToWishlist = id => {
+    const storedWishlist = getStoredWishlist();
+    const exists = storedWishlist.find(bookId => bookId === id);
+    if (!exists) {
+        storedWishlist.push(id);
+        localStorage.setItem('wishlist', JSON.stringify(storedWishlist));
+    }
+}
+
+export { getStoredBookToReadList, saveBookToReadList, getStoredWishlist, saveBookToWishlist }

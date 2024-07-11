@@ -27,7 +27,7 @@ const ListedBooks = () => {
             const yearBooks = [...listedBooks].sort((a, b) => b.yearOfPublishing - a.yearOfPublishing);
             setDisplayBooks(yearBooks);
         }
-        setIsDropdownOpen(false); // Close the dropdown after selecting a filter
+        setIsDropdownOpen(false);
     };
 
     useEffect(() => {
@@ -65,9 +65,9 @@ const ListedBooks = () => {
                     )}
                 </div>
             </div>
-            {displayBooks.map(book => (
-                <ReadBook key={book.bookId} book={book} />
-            ))}
+            {
+                displayBooks.map(book => (<ReadBook key={book.bookId} book={book}></ReadBook>))
+            }
         </div>
     );
 };
