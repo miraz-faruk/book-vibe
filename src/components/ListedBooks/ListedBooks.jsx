@@ -1,54 +1,73 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import { getStoredBookToReadList } from "../../utility/localstorage";
+import { getStoredBookToReadList, getStoredWishlist } from "../../utility/localstorage";
 import ReadBook from "../ReadBook/ReadBook";
+import WishlistBook from "../WishlistBook/WishlistBook";
 import { IoIosArrowDown } from "react-icons/io";
 
 const ListedBooks = () => {
     const books = useLoaderData();
 
-    const [listedBooks, setListedBooks] = useState([]);
+    const [listedBooks, setListedBooks] = useState({ read: [], wishlist: [] });
     const [displayBooks, setDisplayBooks] = useState([]);
+    const [activeTab, setActiveTab] = useState('read');
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-    const handleBooksFilter = filter => {
-        if (filter === 'sort by') {
-            setDisplayBooks(listedBooks);
+    const handleBooksFilter = (filter) => {
+        let sortedBooks = [];
+        if (filter === 'rating') {
+            sortedBooks = [...displayBooks].sort((a, b) => b.rating - a.rating);
+        } else if (filter === 'number of pages') {
+            sortedBooks = [...displayBooks].sort((a, b) => b.totalPages - a.totalPages);
+        } else if (filter === 'published year') {
+            sortedBooks = [...displayBooks].sort((a, b) => b.yearOfPublishing - a.yearOfPublishing);
+        } else {
+            sortedBooks = activeTab === 'read' ? listedBooks.read : listedBooks.wishlist;
         }
-        else if (filter === 'rating') {
-            const ratingBooks = [...listedBooks].sort((a, b) => b.rating - a.rating);
-            setDisplayBooks(ratingBooks);
-        }
-        else if (filter === 'number of pages') {
-            const pagesBooks = [...listedBooks].sort((a, b) => b.totalPages - a.totalPages);
-            setDisplayBooks(pagesBooks);
-        }
-        else if (filter === 'published year') {
-            const yearBooks = [...listedBooks].sort((a, b) => b.yearOfPublishing - a.yearOfPublishing);
-            setDisplayBooks(yearBooks);
-        }
+        setDisplayBooks(sortedBooks);
         setIsDropdownOpen(false);
     };
 
     useEffect(() => {
         const storedBookIds = getStoredBookToReadList();
+        const storedWishlistBooks = getStoredWishlist();
+
         if (books.length > 0) {
-            const booksListed = [];
+            const readBooksListed = [];
+            const wishlistBooksListed = [];
+
             for (const id of storedBookIds) {
                 const book = books.find(book => book.bookId === id);
                 if (book) {
-                    booksListed.push(book);
+                    readBooksListed.push(book);
                 }
             }
-            setListedBooks(booksListed);
-            setDisplayBooks(booksListed);
+
+            for (const id of storedWishlistBooks) {
+                const book = books.find(book => book.bookId === id);
+                if (book) {
+                    wishlistBooksListed.push(book);
+                }
+            }
+
+            setListedBooks({
+                read: readBooksListed,
+                wishlist: wishlistBooksListed,
+            });
+
+            setDisplayBooks(activeTab === 'read' ? readBooksListed : wishlistBooksListed);
         }
-    }, [books]);
+    }, [books, activeTab]);
+
+    const handleTabChange = (tab) => {
+        setActiveTab(tab);
+        setDisplayBooks(tab === 'read' ? listedBooks.read : listedBooks.wishlist);
+    };
 
     return (
         <div>
             <h2 className="bg-[#1313130D] text-[28px] font-bold rounded-2xl text-center py-8 mb-8">
-                Books {listedBooks.length}
+                Books {listedBooks[activeTab].length}
             </h2>
             <div className="flex justify-center mb-14">
                 <div className="relative inline-block">
@@ -65,9 +84,31 @@ const ListedBooks = () => {
                     )}
                 </div>
             </div>
-            {
-                displayBooks.map(book => (<ReadBook key={book.bookId} book={book}></ReadBook>))
-            }
+            <div className="flex justify-center mb-4">
+                <button
+                    className={`tab-btn ${activeTab === 'read' ? 'active' : ''}`}
+                    onClick={() => handleTabChange('read')}
+                >
+                    Read Books
+                </button>
+                <button
+                    className={`tab-btn ${activeTab === 'wishlist' ? 'active' : ''}`}
+                    onClick={() => handleTabChange('wishlist')}
+                >
+                    Wishlist
+                </button>
+            </div>
+            <div className="books-container">
+                {
+                    displayBooks.map(book => (
+                        activeTab === 'read' ? (
+                            <ReadBook key={book.bookId} book={book} />
+                        ) : (
+                            <WishlistBook key={book.bookId} book={book} />
+                        )
+                    ))
+                }
+            </div>
         </div>
     );
 };
