@@ -1,11 +1,11 @@
-import React from "react";
+// import React from "react";
 
 const About = () => {
     return (
         <div className="about-container">
             <h2 className="text-2xl font-bold mb-4">About Book Vibe</h2>
             <p className="mb-2">
-                Book Vibe is your go-to platform for tracking your reading journey. Whether you're looking to manage your reading list, keep track of what you've read, or discover new books, we've got you covered!
+                Book Vibe is your go-to platform for tracking your reading journey. Whether you are looking to manage your reading list, keep track of what you have read, or discover new books, we have got you covered!
             </p>
             <p className="mb-2">
                 Our mission is to promote reading and help you discover books that resonate with you. With features like read lists, wishlists, and pages to read, you can easily keep your literary goals in check.
