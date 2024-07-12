@@ -1,63 +1,88 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { useLoaderData } from "react-router-dom";
+import { getStoredBookToReadList } from "../../utility/localstorage";
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const PagesToRead = () => {
+    const books = useLoaderData();
     const [readBooks, setReadBooks] = useState([]);
 
     useEffect(() => {
-        // Function to retrieve stored book IDs from localStorage
-        const getStoredBookToReadList = () => {
-            const storedBookToReadList = localStorage.getItem('book-read-list');
-            if (storedBookToReadList) {
-                return JSON.parse(storedBookToReadList);
-            }
-            return [];
-        }
-
-        // Get stored book IDs
         const storedBookIds = getStoredBookToReadList();
 
-        // Example function to fetch book details from an API
-        const fetchBookDetails = async (bookId) => {
-            try {
-                // Replace this with your actual API endpoint
-                const response = await fetch(`https://example-api.com/books/${bookId}`);
-                if (response.ok) {
-                    const bookData = await response.json();
-                    return { id: bookId, title: bookData.title, author: bookData.author, pages: bookData.pages };
-                } else {
-                    throw new Error('Failed to fetch book details');
-                }
-            } catch (error) {
-                console.error('Error fetching book details:', error);
-                return null;
-            }
+        if (books.length > 0) {
+            const readBooksListed = books.filter(book =>
+                storedBookIds.some(id => id === book.bookId)
+            );
+            setReadBooks(readBooksListed);
         }
+    }, [books]);
 
-        // Fetch details for each stored book ID
-        const fetchBooksInformation = async () => {
-            const bookDetailsPromises = storedBookIds.map(async (id) => {
-                return await fetchBookDetails(id);
-            });
-            const booksInformation = await Promise.all(bookDetailsPromises);
-            setReadBooks(booksInformation.filter(book => book !== null));
-        }
+    // Generate an array of colors for each book
+    const colors = readBooks.map(() => `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.6)`);
 
-        // Call the function to fetch book details
-        fetchBooksInformation();
-    }, []); // Empty dependency array ensures useEffect runs once on component mount
+    const chartData = {
+        labels: readBooks.map(book => book.bookName),
+        datasets: [{
+            label: 'Page Numbers',
+            data: readBooks.map(book => book.totalPages),
+            backgroundColor: colors,
+        }],
+    };
+
+    const options = {
+        responsive: true,
+        elements: {
+            bar: {
+                borderSkipped: 'bottom',
+                backgroundColor: 'transparent',
+                borderWidth: 0,
+            },
+        },
+        scales: {
+            x: {
+                ticks: {
+                    font: {
+                        size: 16,
+                    },
+                },
+            },
+            y: {
+                beginAtZero: true,
+                max: 500,
+                ticks: {
+                    font: {
+                        size: 16,
+                    },
+                },
+            },
+        },
+        plugins: {
+            legend: {
+                labels: {
+                    font: {
+                        size: 16,
+                    },
+                },
+            },
+        },
+    };
 
     return (
         <div>
-            <h2>Pages To Read</h2>
-            <ul>
-                {readBooks.map(book => (
-                    <li key={book.id}>
-                        <strong>{book.title}</strong> by {book.author}, Pages: {book.pages}
-                    </li>
-                ))}
-            </ul>
+            <h2 className="bg-[#1313130D] text-[28px] font-bold rounded-2xl text-center py-8 mb-8">
+                Pages To Read: {readBooks.length}
+            </h2>
+            {readBooks.length > 0 && (
+                <div className="mt-8">
+                    <Bar data={chartData} options={options} />
+                </div>
+            )}
         </div>
     );
-}
+};
 
 export default PagesToRead;
