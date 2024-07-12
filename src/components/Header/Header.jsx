@@ -18,6 +18,16 @@ const Header = () => {
                 ? 'text-[#23BE0A] border border-[#23BE0A] font-semibold text-lg'
                 : 'text-[#131313CC] text-lg'
         }>Pages to Read</NavLink></li>
+        <li><NavLink to="about" className={({ isActive }) =>
+            isActive
+                ? 'text-[#23BE0A] border border-[#23BE0A] font-semibold text-lg'
+                : 'text-[#131313CC] text-lg'
+        }>About</NavLink></li>
+        <li><NavLink to="contact" className={({ isActive }) =>
+            isActive
+                ? 'text-[#23BE0A] border border-[#23BE0A] font-semibold text-lg'
+                : 'text-[#131313CC] text-lg'
+        }>Contact</NavLink></li>
     </>
 
     return (
