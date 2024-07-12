@@ -65,7 +65,7 @@ const ListedBooks = () => {
     };
 
     return (
-        <div>
+        <div className="mx-2 md:mx-0">
             <h2 className="bg-[#1313130D] text-[28px] font-bold rounded-2xl text-center py-8 mb-8">
                 Books {listedBooks[activeTab].length}
             </h2>

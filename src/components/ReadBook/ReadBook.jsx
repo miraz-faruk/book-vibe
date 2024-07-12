@@ -10,14 +10,14 @@ const ReadBook = ({ book }) => {
 
     return (
         <div>
-            <div className="flex gap-6 p-6 border rounded-2xl mb-6">
+            <div className="flex md:flex-row flex-col gap-6 p-6 border rounded-2xl mb-6">
                 <div className="bg-[#1313130D] px-12 py-7 rounded-2xl">
-                    <img className="w-44 " src={image} alt="" />
+                    <img className="w-auto md:w-44" src={image} alt="" />
                 </div>
                 <div className="flex flex-col gap-4 w-full">
                     <h2 className="heading-font text-2xl font-bold">{bookName}</h2>
                     <p className="text-[#131313CC] font-medium">By: {author}</p>
-                    <div className="flex items-center">
+                    {/* <div className="flex md:items-center">
                         <h3 className="font-bold me-4">Tags</h3>
                         {tags && tags.length > 0 &&
                             <>
@@ -27,6 +27,21 @@ const ReadBook = ({ book }) => {
                         }
                         <IoLocationOutline />
                         <p className="ms-3 text-[#131313CC]">Year of Publishing: {yearOfPublishing}</p>
+                    </div> */}
+                    <div className="flex flex-col lg:flex-row lg:items-center">
+                        <div className="flex flex-wrap items-center lg:items-center lg:flex-row">
+                            <h3 className="font-bold me-4">Tags</h3>
+                            {tags && tags.length > 0 &&
+                                <>
+                                    <p className="font-medium bg-[#23BE0A0D] text-[#23BE0A] px-4 py-2 rounded-full me-3">#{tags[0]}</p>
+                                    <p className="font-medium bg-[#23BE0A0D] text-[#23BE0A] px-4 py-2 rounded-full me-5">#{tags[1]}</p>
+                                </>
+                            }
+                        </div>
+                        <div className="flex items-center mt-2 lg:mt-0">
+                            <IoLocationOutline />
+                            <p className="ms-3 text-[#131313CC]">Year of Publishing: {yearOfPublishing}</p>
+                        </div>
                     </div>
                     <div className="flex items-center text-[#131313CC] gap-4">
                         <div className="flex gap-2 items-center">
@@ -39,7 +54,7 @@ const ReadBook = ({ book }) => {
                         </div>
                     </div>
                     <hr className="border" />
-                    <div className="flex items-center gap-3">
+                    <div className="flex md:flex-row flex-col items-center gap-3">
                         <a className="bg-[#328EFF26] text-[#328EFF] px-5 py-3 rounded-full">Category: {category}</a>
                         <a className="bg-[#FFAC3326] px-5 py-3 rounded-full text-[#FFAC33]">Rating: {rating}</a>
                         <Link to={`/book/${bookId}`}>
